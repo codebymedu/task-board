@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Heading } from "@/app/ui/components/heading";
 import { TaskCard } from "@/app/ui/components/taskCard";
 import { AddNewTaskCard } from "@/app/ui/components/addNewTaskCard";
+import { AddNewTaskSlidingPane } from "@/app/ui/components/addNewTaskSlidingPane";
 
 export default function Home() {
   // --- RENDER ---
@@ -19,6 +20,7 @@ export default function Home() {
       />
       <br />
       <AddNewTaskCard />
+      <AddNewTaskSlidingPane />
     </main>
   );
 }
