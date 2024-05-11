@@ -8,7 +8,7 @@ export default function Home() {
   // --- RENDER ---
 
   return (
-    <main className=" py-16  w-1/3 m-auto ">
+    <main className=" py-8 md:py-16 px-4 md:px-0 w-full md:w-1/2 lg:w-1/3 m-auto ">
       <Heading />
       {/* TODO: Task List */}
       <br />

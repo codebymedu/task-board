@@ -108,7 +108,7 @@ export const TaskForm = ({
           </label>
 
           <RadioGroup
-            className="mt-2 flex gap-4"
+            className="mt-2 grid grid-cols-3 md:grid-cols-6 gap-4"
             name="icon"
             value={selectedIconId}
             onChange={setSelectedIconId}
@@ -117,7 +117,7 @@ export const TaskForm = ({
               <Field
                 key={iconId}
                 className={clsx(
-                  "p-2 bg-gray-200 rounded-md cursor-pointer hover:scale-105 text-xl duration-100 ease-in-out",
+                  "p-2 bg-gray-200 rounded-md cursor-pointer hover:scale-105 text-xl duration-100 ease-in-out flex justify-center",
                   {
                     "bg-in-progress": Number(selectedIconId) === Number(iconId),
                   }
@@ -141,7 +141,7 @@ export const TaskForm = ({
           </label>
 
           <RadioGroup
-            className="mt-2 grid gap-4 grid-cols-2"
+            className="mt-2 grid gap-4 grid-cols-1 md:grid-cols-2"
             name="status"
             id="taskStatus"
             value={selectedStatus}

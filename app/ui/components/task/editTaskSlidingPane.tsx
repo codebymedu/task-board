@@ -40,13 +40,16 @@ export const EditTaskSlidingPane = () => {
     <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Task details">
       <TaskForm
         actions={
-          <div className="gap-4 flex">
-            <Button style="secondary">
+          <div className="mt-4 gap-4 flex flex-col-reverse md:flex-row w-full justify-end">
+            <Button
+              className="w-full justify-center md:justify-normal md:w-auto"
+              style="secondary"
+            >
               Delete{" "}
               <Image alt="" src="/icons/Trash.svg" width={20} height={20} />
             </Button>
 
-            <Button>
+            <Button className="w-full  mb-2 md:mb-0 justify-center md:justify-normal md:w-auto">
               Save{" "}
               <Image
                 alt=""

@@ -31,7 +31,7 @@ export const SlidingPane = ({
 
       <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+          <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full md:pl-10">
             <Transition.Child
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -41,7 +41,7 @@ export const SlidingPane = ({
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="  rounded-xl overflow-hidden pointer-events-auto w-screen max-w-xl mr-4 mt-4 mb-4  ">
+              <Dialog.Panel className="  rounded-xl overflow-hidden pointer-events-auto w-screen md:max-w-xl m-4 md:ml-0 md:mr-4 md:mt-4 md:mb-4   ">
                 <div className="flex h-full flex-col overflow-auto bg-white py-6 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">

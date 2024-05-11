@@ -22,8 +22,6 @@ export const AddNewTaskSlidingPane = () => {
     errors: {},
   });
 
-  console.log({ state });
-
   // --- CALLBACKS ---
 
   const handleClose = () => {
@@ -42,7 +40,7 @@ export const AddNewTaskSlidingPane = () => {
     <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Add new task">
       <TaskForm
         actions={
-          <Button>
+          <Button className="w-full  justify-center md:justify-normal md:w-auto">
             Add new task{" "}
             <Image alt="" src="/icons/Done_round.svg" width={20} height={20} />
           </Button>
