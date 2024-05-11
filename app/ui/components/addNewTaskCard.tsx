@@ -22,7 +22,7 @@ export const AddNewTaskCard = () => {
 
   return (
     <div
-      className={`bg-[#F5E8D5] p-4 flex justify-between rounded-xl cursor-pointer`}
+      className={`bg-[#F5E8D5] p-4 flex justify-between rounded-xl cursor-pointer hover:scale-105 ease-in-out duration-100`}
       onClick={handleOpenSlidingPane}
     >
       <div className="flex gap-4 items-center">

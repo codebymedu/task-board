@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SlidingPane } from "@/app/ui/components/slidingPane";
+import { TaskForm } from "@/app/ui/components/taskForm";
 
 export const AddNewTaskSlidingPane = () => {
   // --- STATE ---
@@ -28,7 +29,7 @@ export const AddNewTaskSlidingPane = () => {
 
   return (
     <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Add new task">
-      test
+      <TaskForm />
     </SlidingPane>
   );
 };

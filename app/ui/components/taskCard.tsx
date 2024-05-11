@@ -18,7 +18,7 @@ export const TaskCard = ({
 
   return (
     <div
-      className={`bg-${TASK_STYLES_BY_STATUS[status].backgroundColor} p-4 flex justify-between  rounded-xl cursor-pointer`}
+      className={`bg-${TASK_STYLES_BY_STATUS[status].backgroundColor} p-4 flex justify-between  rounded-xl cursor-pointer hover:scale-105 ease-in-out duration-100`}
     >
       <div
         className={clsx("flex gap-4", {
