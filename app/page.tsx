@@ -2,7 +2,8 @@ import { Heading } from "@/app/ui/components/heading";
 import { TaskCard } from "@/app/ui/components/task/taskCard";
 import { AddNewTaskCard } from "@/app/ui/components/task/addNewTaskCard";
 import { AddNewTaskSlidingPane } from "@/app/ui/components/task/addNewTaskSlidingPane";
-import { EditTaskSlidingPane } from "./ui/components/task/editTaskSlidingPane";
+import { EditTaskSlidingPane } from "@/app/ui/components/task/editTaskSlidingPane";
+import { Suspense } from "react";
 
 export default function Home() {
   // --- RENDER ---
@@ -19,11 +20,19 @@ export default function Home() {
         status="willNotDo"
       />
       <br />
-      <AddNewTaskCard />
+
+      <Suspense fallback="Loading">
+        <AddNewTaskCard />
+      </Suspense>
 
       {/* Sliding Panes */}
-      <AddNewTaskSlidingPane />
-      <EditTaskSlidingPane />
+      <Suspense fallback="Loading">
+        <AddNewTaskSlidingPane />
+      </Suspense>
+
+      <Suspense fallback="Loading">
+        <EditTaskSlidingPane />
+      </Suspense>
     </main>
   );
 }
