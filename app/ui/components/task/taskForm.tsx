@@ -2,7 +2,7 @@ import { RadioGroup, Field, Label, Radio } from "@headlessui/react";
 import clsx from "clsx";
 import { ReactNode, useState } from "react";
 import Image from "next/image";
-import { TaskFormFields, TaskFormState } from "@/app/lib/types";
+import { TaskFormFields, TaskFormState, TaskStatus } from "@/app/lib/types";
 
 type TaskFormProps = {
   actions: ReactNode;
@@ -26,7 +26,7 @@ export const TaskForm = ({
 
   const [selectedIconId, setSelectedIconId] = useState<string | number>(1);
 
-  const [selectedStatus, setSelectedStatus] = useState<Status>();
+  const [selectedStatus, setSelectedStatus] = useState<TaskStatus>();
 
   // --- RENDER ---
 
@@ -43,6 +43,7 @@ export const TaskForm = ({
           >
             Task name
           </label>
+
           <div className="mt-2">
             <input
               type="text"
@@ -50,8 +51,20 @@ export const TaskForm = ({
               id="taskName"
               className="block w-full rounded-md border-0 py-1.5 px-4 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-500 sm:text-sm sm:leading-6"
               placeholder="Enter a task name"
+              aria-describedby="name-error"
             />
           </div>
+
+          {validationErrors?.name &&
+            validationErrors.name.map((error) => (
+              <p
+                key={error}
+                className="mt-2 text-sm text-red-600"
+                id="name-error"
+              >
+                {error}
+              </p>
+            ))}
         </div>
 
         <div className="mb-6">
@@ -61,6 +74,7 @@ export const TaskForm = ({
           >
             Description
           </label>
+
           <div className="mt-2">
             <textarea
               rows={4}
@@ -69,8 +83,20 @@ export const TaskForm = ({
               className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-500 sm:text-sm sm:leading-6"
               defaultValue={""}
               placeholder="Enter a short description"
+              aria-describedby="description-error"
             />
           </div>
+
+          {validationErrors?.description &&
+            validationErrors.description.map((error) => (
+              <p
+                key={error}
+                className="mt-2 text-sm text-red-600"
+                id="description-error"
+              >
+                {error}
+              </p>
+            ))}
         </div>
 
         <div className="mb-6">
@@ -91,7 +117,7 @@ export const TaskForm = ({
               <Field
                 key={iconId}
                 className={clsx(
-                  "p-3 bg-gray-200 rounded-md cursor-pointer hover:scale-105 duration-100 ease-in-out",
+                  "p-2 bg-gray-200 rounded-md cursor-pointer hover:scale-105 text-xl duration-100 ease-in-out",
                   {
                     "bg-in-progress": Number(selectedIconId) === Number(iconId),
                   }
@@ -131,7 +157,13 @@ export const TaskForm = ({
                       "border-blue-500": selectedStatus === statusKey,
                     }
                   )}
-                  onClick={() => setSelectedStatus(statusKey as Status)}
+                  onClick={() =>
+                    setSelectedStatus(
+                      selectedStatus === statusKey
+                        ? undefined
+                        : (statusKey as TaskStatus)
+                    )
+                  }
                 >
                   <Radio value={status} />
 
@@ -186,10 +218,8 @@ const TASK_ICONS = {
   6: "⏰",
 };
 
-type Status = "completed" | "inProgress" | "willNotDo";
-
 const TASK_STATUS_STYLE: Record<
-  Status,
+  TaskStatus,
   { label: string; icon: string; backgroundColor: string }
 > = {
   completed: {

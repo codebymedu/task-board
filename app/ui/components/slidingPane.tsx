@@ -41,8 +41,8 @@ export const SlidingPane = ({
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="bg-red-500 rounded-xl overflow-hidden pointer-events-auto w-screen max-w-xl mr-4 mt-4 mb-4  ">
-                <div className="flex h-full flex-col  bg-white py-6 shadow-xl">
+              <Dialog.Panel className="  rounded-xl overflow-hidden pointer-events-auto w-screen max-w-xl mr-4 mt-4 mb-4  ">
+                <div className="flex h-full flex-col overflow-auto bg-white py-6 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className=" text-lg font-semibold leading-6 text-gray-900">

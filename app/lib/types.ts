@@ -14,3 +14,5 @@ export type TaskFormState = {
   };
   message?: string | null;
 };
+
+export type TaskStatus = "completed" | "inProgress" | "willNotDo";

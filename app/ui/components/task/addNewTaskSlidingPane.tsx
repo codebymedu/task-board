@@ -22,6 +22,8 @@ export const AddNewTaskSlidingPane = () => {
     errors: {},
   });
 
+  console.log({ state });
+
   // --- CALLBACKS ---
 
   const handleClose = () => {
