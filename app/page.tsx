@@ -1,8 +1,8 @@
 import { Heading } from "@/app/ui/components/heading";
-import { TaskCard } from "@/app/ui/components/taskCard";
-import { AddNewTaskCard } from "@/app/ui/components/addNewTaskCard";
-import { AddNewTaskSlidingPane } from "@/app/ui/components/addNewTaskSlidingPane";
-import { EditTaskSlidingPane } from "./ui/components/editTaskSlidingPane";
+import { TaskCard } from "@/app/ui/components/task/taskCard";
+import { AddNewTaskCard } from "@/app/ui/components/task/addNewTaskCard";
+import { AddNewTaskSlidingPane } from "@/app/ui/components/task/addNewTaskSlidingPane";
+import { EditTaskSlidingPane } from "./ui/components/task/editTaskSlidingPane";
 
 export default function Home() {
   // --- RENDER ---

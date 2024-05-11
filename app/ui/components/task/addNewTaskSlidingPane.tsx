@@ -2,9 +2,11 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SlidingPane } from "@/app/ui/components/slidingPane";
-import { TaskForm } from "@/app/ui/components/taskForm";
+import { TaskForm } from "@/app/ui/components/task/taskForm";
 import { createTask } from "@/app/lib/taskActions";
 import { useFormState } from "react-dom";
+import { Button } from "@/app/ui/components/button";
+import Image from "next/image";
 
 export const AddNewTaskSlidingPane = () => {
   // --- STATE ---
@@ -37,7 +39,12 @@ export const AddNewTaskSlidingPane = () => {
   return (
     <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Add new task">
       <TaskForm
-        actions={<div>add new task</div>}
+        actions={
+          <Button>
+            Add new task{" "}
+            <Image alt="" src="/icons/Done_round.svg" width={20} height={20} />
+          </Button>
+        }
         handleSubmit={dispatch}
         validationErrors={state.errors}
       />
