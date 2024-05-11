@@ -13,12 +13,14 @@ export default function Home() {
       <Heading />
       {/* TODO: Task List */}
       <br />
-      <TaskCard
-        description="asd"
-        icon="💻"
-        name="Do this task next"
-        status="willNotDo"
-      />
+      <Suspense>
+        <TaskCard
+          description="asd"
+          icon="💻"
+          name="Do this task next"
+          status="willNotDo"
+        />
+      </Suspense>
       <br />
 
       <Suspense fallback="Loading">
