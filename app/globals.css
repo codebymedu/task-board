@@ -6,3 +6,34 @@ body {
   color: #000000;
   background: #F8FAFC;
 }
+
+
+/* --- COLORS --- */
+
+.bg-completed {
+  background-color: #A0ECB1;
+}
+
+.bg-completed-icon {
+  background-color: #32D657;
+}
+
+.bg-in-progress {
+  background-color: #F5D565;
+}
+
+.bg-in-progress-icon {
+  background-color: #E9A23B;
+}
+
+.bg-will-not-do {
+  background-color: #F7D4D3;
+}
+
+.bg-will-not-do-icon {
+  background-color: #DD524C;
+}
+
+.bg-to-do {
+  background-color: #E3E8EF;
+}

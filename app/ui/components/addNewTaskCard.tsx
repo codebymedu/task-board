@@ -27,7 +27,7 @@ export const AddNewTaskCard = () => {
       onClick={handleOpenSlidingPane}
     >
       <div className="flex gap-4 items-center">
-        <div className="min-w-12 min-h-12 w-12 h-12 bg-in-progress-icon-bg rounded-lg flex justify-center items-center">
+        <div className="min-w-12 min-h-12 w-12 h-12 bg-in-progress-icon rounded-lg flex justify-center items-center">
           <Image
             alt=""
             src="/icons/Add_round_duotone.svg"

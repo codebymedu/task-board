@@ -3,6 +3,7 @@ import { Heading } from "@/app/ui/components/heading";
 import { TaskCard } from "@/app/ui/components/taskCard";
 import { AddNewTaskCard } from "@/app/ui/components/addNewTaskCard";
 import { AddNewTaskSlidingPane } from "@/app/ui/components/addNewTaskSlidingPane";
+import { Suspense } from "react";
 
 export default function Home() {
   // --- RENDER ---
@@ -19,8 +20,13 @@ export default function Home() {
         status="willNotDo"
       />
       <br />
-      <AddNewTaskCard />
-      <AddNewTaskSlidingPane />
+      <Suspense fallback={<></>}>
+        <AddNewTaskCard />
+      </Suspense>
+
+      <Suspense fallback={<></>}>
+        <AddNewTaskSlidingPane />
+      </Suspense>
     </main>
   );
 }

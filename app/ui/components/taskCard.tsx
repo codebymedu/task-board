@@ -61,21 +61,21 @@ const TASK_STYLES_BY_STATUS: Record<
   }
 > = {
   completed: {
-    backgroundColor: "completed-bg",
-    statusIconBackgroundColor: "completed-icon-bg",
+    backgroundColor: "completed",
+    statusIconBackgroundColor: "completed-icon",
     statusIcon: "/icons/Done_round_duotone.svg",
   },
   inProgress: {
-    backgroundColor: "in-progress-bg",
-    statusIconBackgroundColor: "in-progress-icon-bg",
+    backgroundColor: "in-progress",
+    statusIconBackgroundColor: "in-progress-icon",
     statusIcon: "/icons/Time_atack_duotone.svg",
   },
   willNotDo: {
-    backgroundColor: "will-not-do-bg",
-    statusIconBackgroundColor: "will-not-do-icon-bg",
+    backgroundColor: "will-not-do",
+    statusIconBackgroundColor: "will-not-do-icon",
     statusIcon: "/icons/close_ring_duotone.svg",
   },
   toDo: {
-    backgroundColor: "to-do-bg",
+    backgroundColor: "to-do",
   },
 };
