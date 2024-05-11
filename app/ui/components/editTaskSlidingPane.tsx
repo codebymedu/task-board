@@ -4,14 +4,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SlidingPane } from "@/app/ui/components/slidingPane";
 import { TaskForm } from "@/app/ui/components/taskForm";
 
-export const AddNewTaskSlidingPane = () => {
+export const EditTaskSlidingPane = () => {
   // --- STATE ---
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const isOpen = searchParams.get("pane") === "newTask";
+  const isOpen = searchParams.get("pane") === "editTask";
 
   // --- CALLBACKS ---
 
@@ -28,8 +28,8 @@ export const AddNewTaskSlidingPane = () => {
   // --- RENDER ---
 
   return (
-    <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Add new task">
-      <TaskForm actions={<div>add new task</div>} />
+    <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Task details">
+      <TaskForm actions={<div>delete/ save</div>} />
     </SlidingPane>
   );
 };

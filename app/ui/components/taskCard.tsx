@@ -1,5 +1,8 @@
+"use client";
+
 import clsx from "clsx";
 import Image from "next/image";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 type TaskCardProps = {
   status: "inProgress" | "completed" | "willNotDo" | "toDo";
@@ -14,10 +17,25 @@ export const TaskCard = ({
   name,
   status,
 }: TaskCardProps) => {
+  // --- STATE ---
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // --- CALLBACKS ---
+
+  const handleOpenEditSlidingPane = () => {
+    const params = new URLSearchParams(searchParams);
+    params.set("pane", "editTask");
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
   // --- RENDER ---
 
   return (
     <div
+      onClick={handleOpenEditSlidingPane}
       className={`bg-${TASK_STYLES_BY_STATUS[status].backgroundColor} p-4 flex justify-between  rounded-xl cursor-pointer hover:scale-105 ease-in-out duration-100`}
     >
       <div

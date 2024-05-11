@@ -1,9 +1,8 @@
-import Image from "next/image";
 import { Heading } from "@/app/ui/components/heading";
 import { TaskCard } from "@/app/ui/components/taskCard";
 import { AddNewTaskCard } from "@/app/ui/components/addNewTaskCard";
 import { AddNewTaskSlidingPane } from "@/app/ui/components/addNewTaskSlidingPane";
-import { Suspense } from "react";
+import { EditTaskSlidingPane } from "./ui/components/editTaskSlidingPane";
 
 export default function Home() {
   // --- RENDER ---
@@ -20,13 +19,11 @@ export default function Home() {
         status="willNotDo"
       />
       <br />
-      <Suspense fallback={<></>}>
-        <AddNewTaskCard />
-      </Suspense>
+      <AddNewTaskCard />
 
-      <Suspense fallback={<></>}>
-        <AddNewTaskSlidingPane />
-      </Suspense>
+      {/* Sliding Panes */}
+      <AddNewTaskSlidingPane />
+      <EditTaskSlidingPane />
     </main>
   );
 }
