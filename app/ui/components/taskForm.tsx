@@ -2,20 +2,26 @@ import { RadioGroup, Field, Label, Radio } from "@headlessui/react";
 import clsx from "clsx";
 import { ReactNode, useState } from "react";
 import Image from "next/image";
-
-type TaskFormFields = {
-  name: string;
-  description: string;
-  icon?: string;
-  status?: string;
-};
+import { TaskFormFields, TaskFormState } from "@/app/lib/types";
 
 type TaskFormProps = {
   actions: ReactNode;
   initialValues?: Partial<TaskFormFields>;
+  handleSubmit: (formData: FormData) => void;
+  validationErrors?: TaskFormState["errors"];
 };
 
-export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
+/**
+ * An uncontrollable task form that is supposed to be used with useFormState from "react-dom".
+ *
+ * Is supposed to be reusable enough for both editing and creating new tasks.
+ */
+export const TaskForm = ({
+  actions,
+  initialValues,
+  handleSubmit,
+  validationErrors,
+}: TaskFormProps) => {
   // --- STATE ---
 
   const [selectedIconId, setSelectedIconId] = useState<string | number>(1);
@@ -25,7 +31,10 @@ export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
   // --- RENDER ---
 
   return (
-    <form className="flex flex-col justify-between h-full">
+    <form
+      action={handleSubmit}
+      className="flex flex-col justify-between h-full"
+    >
       <div>
         <div className="mb-6">
           <label
@@ -37,7 +46,7 @@ export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
           <div className="mt-2">
             <input
               type="text"
-              name="taskName"
+              name="name"
               id="taskName"
               className="block w-full rounded-md border-0 py-1.5 px-4 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-500 sm:text-sm sm:leading-6"
               placeholder="Enter a task name"
@@ -55,7 +64,7 @@ export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
           <div className="mt-2">
             <textarea
               rows={4}
-              name="taskDescription"
+              name="description"
               id="taskDescription"
               className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-500 sm:text-sm sm:leading-6"
               defaultValue={""}
@@ -74,7 +83,7 @@ export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
 
           <RadioGroup
             className="mt-2 flex gap-4"
-            name="taskIcon"
+            name="icon"
             value={selectedIconId}
             onChange={setSelectedIconId}
           >
@@ -99,7 +108,7 @@ export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
 
         <div className="mb-6">
           <label
-            htmlFor="taskIcon"
+            htmlFor="taskStatus"
             className="block text-sm font-medium leading-6 text-gray-400"
           >
             Status
@@ -107,7 +116,8 @@ export const TaskForm = ({ actions, initialValues }: TaskFormProps) => {
 
           <RadioGroup
             className="mt-2 grid gap-4 grid-cols-2"
-            name="taskStatus"
+            name="status"
+            id="taskStatus"
             value={selectedStatus}
             onChange={setSelectedStatus}
           >

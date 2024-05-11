@@ -3,6 +3,8 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SlidingPane } from "@/app/ui/components/slidingPane";
 import { TaskForm } from "@/app/ui/components/taskForm";
+import { useFormState } from "react-dom";
+import { editTask } from "@/app/lib/taskActions";
 
 export const EditTaskSlidingPane = () => {
   // --- STATE ---
@@ -12,6 +14,11 @@ export const EditTaskSlidingPane = () => {
   const pathname = usePathname();
 
   const isOpen = searchParams.get("pane") === "editTask";
+
+  const [state, dispatch] = useFormState(editTask, {
+    message: null,
+    errors: {},
+  });
 
   // --- CALLBACKS ---
 
@@ -29,7 +36,11 @@ export const EditTaskSlidingPane = () => {
 
   return (
     <SlidingPane handleClose={handleClose} isOpen={isOpen} title="Task details">
-      <TaskForm actions={<div>delete/ save</div>} />
+      <TaskForm
+        actions={<div>delete/ save</div>}
+        handleSubmit={dispatch}
+        validationErrors={state.errors}
+      />
     </SlidingPane>
   );
 };
