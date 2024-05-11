@@ -1,6 +1,8 @@
 import Image from "next/image";
 
-export const Heading = () => {
+type HeadingProps = { title: string };
+
+export const Heading = ({ title }: HeadingProps) => {
   // --- RENDER ---
 
   return (
@@ -13,7 +15,7 @@ export const Heading = () => {
       />
 
       <div className="flex gap-6 flex-col -mt-2">
-        <h1 className="text-4xl">My Task Board</h1>
+        <h1 className="text-4xl">{title}</h1>
 
         <p>Tasks to keep organised</p>
       </div>

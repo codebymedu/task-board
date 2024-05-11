@@ -16,3 +16,5 @@ export type TaskFormState = {
 };
 
 export type TaskStatus = "completed" | "inProgress" | "willNotDo";
+
+export type Taskboard = { name: string };

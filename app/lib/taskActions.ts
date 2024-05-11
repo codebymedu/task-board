@@ -1,3 +1,5 @@
+"use server";
+
 import { TaskFormState } from "@/app/lib/types";
 import { z } from "zod";
 
