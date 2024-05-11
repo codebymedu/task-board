@@ -108,7 +108,7 @@ export const TaskForm = ({
           </label>
 
           <RadioGroup
-            className="mt-2 grid grid-cols-3 md:grid-cols-6 gap-4"
+            className="mt-2 grid grid-cols-3 md:grid-cols-6 gap-4  "
             name="icon"
             value={selectedIconId}
             onChange={setSelectedIconId}
@@ -117,7 +117,7 @@ export const TaskForm = ({
               <Field
                 key={iconId}
                 className={clsx(
-                  "p-2 bg-gray-200 rounded-md cursor-pointer hover:scale-105 text-xl duration-100 ease-in-out flex justify-center",
+                  "p-2 bg-gray-200 rounded-md cursor-pointer hover:scale-105 text-xl duration-100 ease-in-out flex justify-center focus-within:border-2 focus-within:border-blue-600",
                   {
                     "bg-in-progress": Number(selectedIconId) === Number(iconId),
                   }
@@ -152,7 +152,7 @@ export const TaskForm = ({
                 <Field
                   key={statusKey}
                   className={clsx(
-                    "border-2 border-gray-200 rounded-lg cursor-pointer hover:scale-105 duration-100 ease-in-out",
+                    "border-2 border-gray-200 rounded-lg cursor-pointer hover:scale-105 duration-100 ease-in-out focus-within:border-2 focus-within:border-blue-600",
                     {
                       "border-blue-500": selectedStatus === statusKey,
                     }
