@@ -2,6 +2,8 @@
 
 import { TaskFormState } from "@/app/lib/types";
 import { z } from "zod";
+import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
 
 // --- FORM VALIDATIONS ---
 
@@ -11,9 +13,12 @@ const FormSchema = z.object({
     .string({ required_error: "Please give your task a name" })
     .min(3, "Please give your task a name longer than 3 character")
     .max(64, "Please give your task a name shorter than 64 character"),
-  description: z.string().max(250),
+  description: z.string().max(250).optional(),
   icon: z.coerce.number().default(1),
-  status: z.enum(["completed", "inProgress", "willNotDo"]),
+  status: z
+    .enum(["completed", "inProgress", "willNotDo"])
+    .optional()
+    .nullable(),
 });
 
 const CreateTask = FormSchema.omit({ id: true });
@@ -21,10 +26,11 @@ const EditTask = FormSchema.omit({ id: true });
 
 // --- CRUD ACTIONS ---
 
-export const createTask = (
+export const createTask = async (
   prevState: TaskFormState,
-  taskFormData: FormData
-): TaskFormState => {
+  taskFormData: FormData,
+  taskboardId: number
+): Promise<TaskFormState> => {
   const validatedFields = CreateTask.safeParse({
     name: taskFormData.get("name"),
     description: taskFormData.get("description"),
@@ -33,6 +39,10 @@ export const createTask = (
   });
 
   if (!validatedFields.success) {
+    console.log({
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Failed to create a new task.",
+    });
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Failed to create a new task.",
@@ -42,12 +52,13 @@ export const createTask = (
   const { icon, name, description, status } = validatedFields.data;
 
   try {
-    // SQL HERE TO CREATE TASK
+    await sql`INSERT INTO tasks (task_board_id, name, description, icon, status) VALUES (${taskboardId}, ${name}, ${description}, ${icon}, ${status});`;
   } catch (error) {
     return { message: "Database Error." };
   }
 
-  //   Revalidate & Close Modal
+  revalidatePath("/[taskboardId]", "page");
+
   return {};
 };
 

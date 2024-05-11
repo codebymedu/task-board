@@ -7,20 +7,16 @@ import { createTask } from "@/app/lib/taskActions";
 import { useFormState } from "react-dom";
 import { Button } from "@/app/ui/components/button";
 import Image from "next/image";
+import { TaskFormState } from "@/app/lib/types";
 
 export const AddNewTaskSlidingPane = () => {
-  // --- STATE ---
+  // --- STATE 1 ---
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
   const isOpen = searchParams.get("pane") === "newTask";
-
-  const [state, dispatch] = useFormState(createTask, {
-    message: null,
-    errors: {},
-  });
 
   // --- CALLBACKS ---
 
@@ -33,6 +29,27 @@ export const AddNewTaskSlidingPane = () => {
       `${pathname}${params.toString() ? "?" + params.toString() : ""}`
     );
   };
+
+  // --- STATE 2 ---
+
+  const [state, dispatch] = useFormState<TaskFormState, FormData>(
+    (prevState, taskFormData) =>
+      createTask(
+        prevState,
+        taskFormData,
+        Number(pathname.replace("/", ""))
+      ).then((validationResults) => {
+        if (!validationResults.errors) {
+          handleClose();
+        }
+
+        return validationResults;
+      }),
+    {
+      message: null,
+      errors: {},
+    }
+  );
 
   // --- RENDER ---
 
