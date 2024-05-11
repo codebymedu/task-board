@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { AddNewTaskSlidingPane } from "@/app/ui/components/addNewTaskSlidingPane";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const AddNewTaskCard = () => {
@@ -15,7 +14,7 @@ export const AddNewTaskCard = () => {
 
   const handleOpenSlidingPane = () => {
     const params = new URLSearchParams(searchParams);
-    params.set("slidingPane", "newTask");
+    params.set("pane", "newTask");
     router.replace(`${pathname}?${params.toString()}`);
   };
 
