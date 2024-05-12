@@ -12,18 +12,14 @@ import { useFormState } from "react-dom";
 import { deleteTaskById, editTask } from "@/app/lib/taskActions";
 import { Button } from "@/app/ui/components/button";
 import Image from "next/image";
+import { TaskFormState } from "@/app/lib/types";
 
 export const EditTaskSlidingPane = () => {
-  // --- STATE ---
+  // --- STATE 1 ---
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
-  const [state, dispatch] = useFormState(editTask, {
-    message: null,
-    errors: {},
-  });
 
   // --- HELPERS ---
 
@@ -44,6 +40,23 @@ export const EditTaskSlidingPane = () => {
   };
 
   const handleDeleteTask = () => deleteTaskById(taskId).then(handleClose);
+
+  // --- STATE 2 ---
+
+  const [state, dispatch] = useFormState<TaskFormState, FormData>(
+    (prevState, taskFormData) =>
+      editTask(prevState, taskFormData, taskId).then((validationResults) => {
+        if (!validationResults.errors) {
+          handleClose();
+        }
+
+        return validationResults;
+      }),
+    {
+      message: null,
+      errors: {},
+    }
+  );
 
   // --- RENDER ---
 

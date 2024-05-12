@@ -62,10 +62,11 @@ export const createTask = async (
   return {};
 };
 
-export const editTask = (
+export const editTask = async (
   prevState: TaskFormState,
-  taskFormData: FormData
-): TaskFormState => {
+  taskFormData: FormData,
+  taskId: number
+): Promise<TaskFormState> => {
   const validatedFields = EditTask.safeParse({
     name: taskFormData.get("name"),
     description: taskFormData.get("description"),
@@ -83,12 +84,12 @@ export const editTask = (
   const { icon, name, description, status } = validatedFields.data;
 
   try {
-    // SQL HERE TO EDIT TASK
+    await sql`UPDATE tasks SET name = ${name}, description = ${description}, icon = ${icon}, status = ${status} WHERE id = ${taskId};`;
   } catch (error) {
     return { message: "Database Error." };
   }
 
-  //   Revalidate & Close Modal
+  revalidatePath("/[taskboardId]", "page");
   return {};
 };
 
