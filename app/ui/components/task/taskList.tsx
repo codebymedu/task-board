@@ -15,6 +15,7 @@ export const TaskList = async ({ taskboardId }: TaskListProps) => {
         <>
           {tasks?.map((task) => (
             <TaskCard
+              key={task.id}
               id={task.id}
               className="mb-4 first:mt-8"
               description={task.description}
