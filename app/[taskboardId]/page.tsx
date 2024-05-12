@@ -5,6 +5,7 @@ import { AddNewTaskSlidingPane } from "@/app/ui/components/task/addNewTaskSlidin
 import { EditTaskSlidingPane } from "@/app/ui/components/task/editTaskSlidingPane";
 import { Suspense } from "react";
 import { fetchTaskboard } from "@/app/lib/taskBoardActions";
+import { fetchTasksByTaskboardId } from "@/app/lib/taskActions";
 
 export default async function Home({
   params,
@@ -12,6 +13,7 @@ export default async function Home({
   params: { taskboardId: string };
 }) {
   const taskboard = await fetchTaskboard(Number(params.taskboardId));
+  const tasks = await fetchTasksByTaskboardId(Number(params.taskboardId));
 
   // --- RENDER ---
 

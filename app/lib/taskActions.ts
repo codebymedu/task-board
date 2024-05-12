@@ -1,6 +1,6 @@
 "use server";
 
-import { TaskFormState } from "@/app/lib/types";
+import { Task, TaskFormState } from "@/app/lib/types";
 import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
@@ -93,3 +93,16 @@ export const editTask = (
 };
 
 export const deleteTask = (taskId: number) => ({});
+
+export const fetchTasksByTaskboardId = async (
+  taskboardId: number
+): Promise<Task[] | undefined> => {
+  try {
+    const selectResult =
+      await sql`SELECT * FROM tasks WHERE task_board_id=${taskboardId};`;
+
+    return selectResult.rows as Task[];
+  } catch (error) {
+    console.error("Error getting new taskboard:", error);
+  }
+};
