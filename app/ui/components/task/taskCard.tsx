@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 type TaskCardProps = {
+  id: number;
   status: "inProgress" | "completed" | "willNotDo" | "toDo";
   name: string;
   description?: string;
@@ -14,6 +15,7 @@ type TaskCardProps = {
 };
 
 export const TaskCard = ({
+  id,
   description,
   icon,
   name,
@@ -31,6 +33,7 @@ export const TaskCard = ({
   const handleOpenEditSlidingPane = () => {
     const params = new URLSearchParams(searchParams);
     params.set("pane", "editTask");
+    params.set("taskId", String(id));
     router.replace(`${pathname}?${params.toString()}`);
   };
 

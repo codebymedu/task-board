@@ -106,3 +106,15 @@ export const fetchTasksByTaskboardId = async (
     console.error("Error getting new taskboard:", error);
   }
 };
+
+export const deleteTaskById = async (taskId: number): Promise<boolean> => {
+  try {
+    const deleteResult = await sql`DELETE FROM tasks WHERE id=${taskId};`;
+
+    revalidatePath("/[taskboardId]", "page");
+    return true;
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    return false;
+  }
+};
