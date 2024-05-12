@@ -23,5 +23,5 @@ export type Task = {
   name: string;
   description: string;
   icon: number;
-  status: string | null;
+  status: TaskStatus | null;
 };

@@ -5,7 +5,7 @@ import { AddNewTaskSlidingPane } from "@/app/ui/components/task/addNewTaskSlidin
 import { EditTaskSlidingPane } from "@/app/ui/components/task/editTaskSlidingPane";
 import { Suspense } from "react";
 import { fetchTaskboard } from "@/app/lib/taskBoardActions";
-import { fetchTasksByTaskboardId } from "@/app/lib/taskActions";
+import { TaskList } from "@/app/ui/components/task/taskList";
 
 export default async function Home({
   params,
@@ -13,24 +13,14 @@ export default async function Home({
   params: { taskboardId: string };
 }) {
   const taskboard = await fetchTaskboard(Number(params.taskboardId));
-  const tasks = await fetchTasksByTaskboardId(Number(params.taskboardId));
 
   // --- RENDER ---
 
   return (
     <main className=" py-8 md:py-16 px-4 md:px-0 w-full md:w-1/2 lg:w-1/3 m-auto ">
       <Heading title={taskboard?.name || "Loading"} />
-      {/* TODO: Task List */}
-      <br />
-      <Suspense>
-        <TaskCard
-          description="asd"
-          icon="💻"
-          name="Do this task next"
-          status="willNotDo"
-        />
-      </Suspense>
-      <br />
+
+      <TaskList taskboardId={Number(params.taskboardId)} />
 
       <Suspense fallback="Loading">
         <AddNewTaskCard />

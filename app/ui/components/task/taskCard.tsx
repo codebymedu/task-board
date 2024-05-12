@@ -1,5 +1,6 @@
 "use client";
 
+import { TASK_ICONS, TASK_STATUS_STYLES } from "@/app/lib/taskUI";
 import clsx from "clsx";
 import Image from "next/image";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -8,14 +9,16 @@ type TaskCardProps = {
   status: "inProgress" | "completed" | "willNotDo" | "toDo";
   name: string;
   description?: string;
-  icon: string;
+  icon: number;
+  className?: string;
 };
 
 export const TaskCard = ({
   description,
-  icon = "✔️",
+  icon,
   name,
   status,
+  className,
 }: TaskCardProps) => {
   // --- STATE ---
 
@@ -36,7 +39,10 @@ export const TaskCard = ({
   return (
     <div
       onClick={handleOpenEditSlidingPane}
-      className={`bg-${TASK_STYLES_BY_STATUS[status].backgroundColor} p-4 flex justify-between  rounded-xl cursor-pointer hover:scale-105 ease-in-out duration-100`}
+      className={clsx(
+        `bg-${TASK_STATUS_STYLES[status].backgroundColor} p-4 flex justify-between  rounded-xl cursor-pointer hover:scale-105 ease-in-out duration-100`,
+        className
+      )}
     >
       <div
         className={clsx("flex gap-4", {
@@ -44,7 +50,7 @@ export const TaskCard = ({
         })}
       >
         <div className="min-w-12 min-h-12 w-12 h-12 bg-white rounded-lg flex justify-center items-center">
-          {icon}
+          {TASK_ICONS[icon]}
         </div>
 
         <div className="flex flex-col ">
@@ -54,13 +60,13 @@ export const TaskCard = ({
         </div>
       </div>
 
-      {TASK_STYLES_BY_STATUS[status].statusIcon && (
+      {TASK_STATUS_STYLES[status].icon && (
         <div
-          className={`min-w-12 min-h-12 w-12 h-12 ml-4 bg-${TASK_STYLES_BY_STATUS[status].statusIconBackgroundColor} rounded-lg flex justify-center items-center`}
+          className={`min-w-12 min-h-12 w-12 h-12 ml-4 bg-${TASK_STATUS_STYLES[status].iconBackgroundColor} rounded-lg flex justify-center items-center`}
         >
           <Image
             alt=""
-            src={TASK_STYLES_BY_STATUS[status].statusIcon!}
+            src={TASK_STATUS_STYLES[status].icon!}
             width={20}
             height={20}
           />
@@ -68,32 +74,4 @@ export const TaskCard = ({
       )}
     </div>
   );
-};
-
-const TASK_STYLES_BY_STATUS: Record<
-  TaskCardProps["status"],
-  {
-    backgroundColor: string;
-    statusIcon?: string;
-    statusIconBackgroundColor?: string;
-  }
-> = {
-  completed: {
-    backgroundColor: "completed",
-    statusIconBackgroundColor: "completed-icon",
-    statusIcon: "/icons/Done_round_duotone.svg",
-  },
-  inProgress: {
-    backgroundColor: "in-progress",
-    statusIconBackgroundColor: "in-progress-icon",
-    statusIcon: "/icons/Time_atack_duotone.svg",
-  },
-  willNotDo: {
-    backgroundColor: "will-not-do",
-    statusIconBackgroundColor: "will-not-do-icon",
-    statusIcon: "/icons/close_ring_duotone.svg",
-  },
-  toDo: {
-    backgroundColor: "to-do",
-  },
 };

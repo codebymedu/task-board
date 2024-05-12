@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { ReactNode, useState } from "react";
 import Image from "next/image";
 import { TaskFormFields, TaskFormState, TaskStatus } from "@/app/lib/types";
+import { TASK_ICONS, TASK_STATUS_STYLES } from "@/app/lib/taskUI";
 
 type TaskFormProps = {
   actions: ReactNode;
@@ -147,58 +148,60 @@ export const TaskForm = ({
             value={selectedStatus}
             onChange={setSelectedStatus}
           >
-            {Object.entries(TASK_STATUS_STYLE).map(
-              ([statusKey, statusStyles]) => (
-                <Field
-                  key={statusKey}
-                  className={clsx(
-                    "border-2 border-gray-200 rounded-lg cursor-pointer hover:scale-105 duration-100 ease-in-out focus-within:border-2 focus-within:border-blue-600",
-                    {
-                      "border-blue-500": selectedStatus === statusKey,
-                    }
-                  )}
-                  onClick={() =>
-                    setSelectedStatus(
-                      selectedStatus === statusKey
-                        ? undefined
-                        : (statusKey as TaskStatus)
-                    )
-                  }
-                >
-                  <Radio value={status} />
-
-                  <Label className="cursor-pointer justify-between flex h-full items-center">
-                    <div className="flex gap-2 items-center">
-                      <div
-                        className={clsx(
-                          "h-10 w-10 m-1 rounded-md flex justify-center",
-                          statusStyles.backgroundColor
-                        )}
-                      >
-                        <Image
-                          alt=""
-                          src={statusStyles.icon}
-                          height={20}
-                          width={20}
-                        />
-                      </div>
-
-                      {statusStyles.label}
-                    </div>
-
-                    {selectedStatus === statusKey && (
-                      <div className="h-5 w-5 m-2 rounded-full flex justify-center bg-blue-500">
-                        <Image
-                          alt=""
-                          src="/icons/Done_round.svg"
-                          height={16}
-                          width={16}
-                        />
-                      </div>
+            {Object.entries(TASK_STATUS_STYLES).map(
+              ([statusKey, statusStyles]) =>
+                statusStyles.label &&
+                statusStyles.icon && (
+                  <Field
+                    key={statusKey}
+                    className={clsx(
+                      "border-2 border-gray-200 rounded-lg cursor-pointer hover:scale-105 duration-100 ease-in-out focus-within:border-2 focus-within:border-blue-600",
+                      {
+                        "border-blue-500": selectedStatus === statusKey,
+                      }
                     )}
-                  </Label>
-                </Field>
-              )
+                    onClick={() =>
+                      setSelectedStatus(
+                        selectedStatus === statusKey
+                          ? undefined
+                          : (statusKey as TaskStatus)
+                      )
+                    }
+                  >
+                    <Radio value={statusKey} />
+
+                    <Label className="cursor-pointer justify-between flex h-full items-center">
+                      <div className="flex gap-2 items-center">
+                        <div
+                          className={clsx(
+                            "h-10 w-10 m-1 rounded-md flex justify-center",
+                            "bg-" + statusStyles.iconBackgroundColor
+                          )}
+                        >
+                          <Image
+                            alt=""
+                            src={statusStyles.icon}
+                            height={20}
+                            width={20}
+                          />
+                        </div>
+
+                        {statusStyles.label}
+                      </div>
+
+                      {selectedStatus === statusKey && (
+                        <div className="h-5 w-5 m-2 rounded-full flex justify-center bg-blue-500">
+                          <Image
+                            alt=""
+                            src="/icons/Done_round.svg"
+                            height={16}
+                            width={16}
+                          />
+                        </div>
+                      )}
+                    </Label>
+                  </Field>
+                )
             )}
           </RadioGroup>
         </div>
@@ -207,34 +210,4 @@ export const TaskForm = ({
       <div className="w-full justify-end flex">{actions}</div>
     </form>
   );
-};
-
-const TASK_ICONS = {
-  1: "🖥️",
-  2: "💬",
-  3: "☕",
-  4: "🏋️‍♂️",
-  5: "📚",
-  6: "⏰",
-};
-
-const TASK_STATUS_STYLE: Record<
-  TaskStatus,
-  { label: string; icon: string; backgroundColor: string }
-> = {
-  completed: {
-    label: "Completed",
-    icon: "/icons/Done_round_duotone.svg",
-    backgroundColor: "bg-completed-icon",
-  },
-  inProgress: {
-    label: "In Progress",
-    icon: "/icons/Time_atack_duotone.svg",
-    backgroundColor: "bg-in-progress-icon",
-  },
-  willNotDo: {
-    label: "Won't do",
-    icon: "/icons/Close_ring_duotone.svg",
-    backgroundColor: "bg-will-not-do-icon",
-  },
 };
