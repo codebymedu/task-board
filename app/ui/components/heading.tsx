@@ -1,8 +1,30 @@
+"use client";
+
+import { updateTaskboardName } from "@/app/lib/taskBoardActions";
 import Image from "next/image";
+import { useRef, useCallback } from "react";
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
+import toast from "react-hot-toast";
 
-type HeadingProps = { title: string };
+type HeadingProps = { title: string; taskboardId: number };
 
-export const Heading = ({ title }: HeadingProps) => {
+export const Heading = ({ title, taskboardId }: HeadingProps) => {
+  // --- STATE ---
+
+  const taskboardTitle = useRef(title);
+
+  // --- CALLBACKS ---
+
+  const handleChange = useCallback((event: ContentEditableEvent) => {
+    taskboardTitle.current = event.target.value;
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    toast.success("Taskboard title changed successfully.");
+
+    updateTaskboardName(taskboardId, taskboardTitle.current);
+  }, []);
+
   // --- RENDER ---
 
   return (
@@ -15,7 +37,12 @@ export const Heading = ({ title }: HeadingProps) => {
       />
 
       <div className="flex gap-6 flex-col -mt-2">
-        <h1 className="text-4xl">{title}</h1>
+        <ContentEditable
+          html={taskboardTitle.current}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="text-4xl"
+        />
 
         <p>Tasks to keep organised</p>
       </div>

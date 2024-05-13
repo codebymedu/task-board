@@ -2,12 +2,13 @@
 
 import { sql } from "@vercel/postgres";
 import { Taskboard } from "@/app/lib/types";
+import { unstable_noStore as noStore } from "next/cache";
 
-export const createTaskboard = async (taskboardName = "My Task Board") => {
+export const createTaskboard = async (name = "My Task Board") => {
   try {
     const insertResult = await sql`
           INSERT INTO taskboards (name)
-          VALUES (${taskboardName})
+          VALUES (${name})
           RETURNING id;
         `;
 
@@ -18,14 +19,26 @@ export const createTaskboard = async (taskboardName = "My Task Board") => {
 };
 
 export const fetchTaskboard = async (
-  taskboardId: number
+  id: number
 ): Promise<Taskboard | undefined> => {
+  noStore();
+
   try {
-    const selectResult =
-      await sql`SELECT name FROM taskboards WHERE id=${taskboardId};`;
+    const selectResult = await sql`SELECT name FROM taskboards WHERE id=${id};`;
 
     return selectResult.rows[0] as Taskboard;
   } catch (error) {
     console.error("Error getting new taskboard:", error);
+  }
+};
+
+export const updateTaskboardName = async (id: number, name: string) => {
+  try {
+    const updateResult =
+      await sql`UPDATE taskboards SET name = ${name} WHERE id=${id};`;
+
+    return updateResult.rows[0] as Taskboard;
+  } catch (error) {
+    console.error("Error updating taskboard name:", error);
   }
 };

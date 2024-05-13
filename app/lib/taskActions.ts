@@ -3,7 +3,7 @@
 import { Task, TaskFormState } from "@/app/lib/types";
 import { z } from "zod";
 import { sql } from "@vercel/postgres";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 
 // --- FORM VALIDATIONS ---
 
@@ -96,6 +96,8 @@ export const editTask = async (
 export const fetchTasksByTaskboardId = async (
   taskboardId: number
 ): Promise<Task[] | undefined> => {
+  noStore();
+
   try {
     const selectResult =
       await sql`SELECT * FROM tasks WHERE task_board_id=${taskboardId};`;
@@ -119,6 +121,8 @@ export const deleteTask = async (taskId: number): Promise<boolean> => {
 };
 
 export const fetchTask = async (taskId: number): Promise<Task | undefined> => {
+  noStore();
+
   try {
     const selectResult = await sql`SELECT * FROM tasks WHERE id=${taskId};`;
 

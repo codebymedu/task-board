@@ -31,7 +31,10 @@ export default async function Home({
 
   return (
     <main className=" py-8 md:py-16 px-4 md:px-0 w-full md:w-1/2 lg:w-1/3 m-auto ">
-      <Heading title={taskboard?.name || "Loading"} />
+      <Heading
+        taskboardId={Number(params.taskboardId)}
+        title={taskboard?.name || "Loading"}
+      />
 
       <TaskList taskboardId={Number(params.taskboardId)} />
 
