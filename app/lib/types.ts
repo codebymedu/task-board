@@ -1,8 +1,8 @@
 export type TaskFormFields = {
   name: string;
   description: string;
-  icon?: string;
-  status?: string;
+  icon?: number;
+  status?: TaskStatus | null;
 };
 
 export type TaskFormState = {

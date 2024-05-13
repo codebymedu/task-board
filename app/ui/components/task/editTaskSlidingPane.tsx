@@ -9,12 +9,16 @@ import {
 import { SlidingPane } from "@/app/ui/components/slidingPane";
 import { TaskForm } from "@/app/ui/components/task/taskForm";
 import { useFormState } from "react-dom";
-import { deleteTaskById, editTask } from "@/app/lib/taskActions";
+import { deleteTask, editTask } from "@/app/lib/taskActions";
 import { Button } from "@/app/ui/components/button";
 import Image from "next/image";
-import { TaskFormState } from "@/app/lib/types";
+import { Task, TaskFormState } from "@/app/lib/types";
 
-export const EditTaskSlidingPane = () => {
+type EditTaskSlidingPaneProps = {
+  task: Task;
+};
+
+export const EditTaskSlidingPane = ({ task }: EditTaskSlidingPaneProps) => {
   // --- STATE 1 ---
 
   const searchParams = useSearchParams();
@@ -39,7 +43,7 @@ export const EditTaskSlidingPane = () => {
     );
   };
 
-  const handleDeleteTask = () => deleteTaskById(taskId).then(handleClose);
+  const handleDeleteTask = () => deleteTask(taskId).then(handleClose);
 
   // --- STATE 2 ---
 
@@ -91,6 +95,7 @@ export const EditTaskSlidingPane = () => {
           </div>
         }
         handleSubmit={dispatch}
+        initialValues={task}
         validationErrors={state.errors}
       />
     </SlidingPane>

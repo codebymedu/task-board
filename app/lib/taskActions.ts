@@ -93,8 +93,6 @@ export const editTask = async (
   return {};
 };
 
-export const deleteTask = (taskId: number) => ({});
-
 export const fetchTasksByTaskboardId = async (
   taskboardId: number
 ): Promise<Task[] | undefined> => {
@@ -108,14 +106,24 @@ export const fetchTasksByTaskboardId = async (
   }
 };
 
-export const deleteTaskById = async (taskId: number): Promise<boolean> => {
+export const deleteTask = async (taskId: number): Promise<boolean> => {
   try {
-    const deleteResult = await sql`DELETE FROM tasks WHERE id=${taskId};`;
+    await sql`DELETE FROM tasks WHERE id=${taskId};`;
 
     revalidatePath("/[taskboardId]", "page");
     return true;
   } catch (error) {
     console.error("Error deleting task:", error);
     return false;
+  }
+};
+
+export const fetchTask = async (taskId: number): Promise<Task | undefined> => {
+  try {
+    const selectResult = await sql`SELECT * FROM tasks WHERE id=${taskId};`;
+
+    return selectResult.rows[0] as Task;
+  } catch (error) {
+    console.error("Error getting new task:", error);
   }
 };

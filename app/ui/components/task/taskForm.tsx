@@ -25,9 +25,13 @@ export const TaskForm = ({
 }: TaskFormProps) => {
   // --- STATE ---
 
-  const [selectedIconId, setSelectedIconId] = useState<string | number>(1);
+  const [selectedIconId, setSelectedIconId] = useState<string | number>(
+    initialValues?.icon || 1
+  );
 
-  const [selectedStatus, setSelectedStatus] = useState<TaskStatus>();
+  const [selectedStatus, setSelectedStatus] = useState<TaskStatus | undefined>(
+    initialValues?.status || undefined
+  );
 
   // --- RENDER ---
 
@@ -53,6 +57,7 @@ export const TaskForm = ({
               className="block w-full rounded-md border-0 py-1.5 px-4 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-500 sm:text-sm sm:leading-6"
               placeholder="Enter a task name"
               aria-describedby="name-error"
+              defaultValue={initialValues?.name}
             />
           </div>
 
@@ -82,7 +87,7 @@ export const TaskForm = ({
               name="description"
               id="taskDescription"
               className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none focus:ring-blue-500 sm:text-sm sm:leading-6"
-              defaultValue={""}
+              defaultValue={initialValues?.description}
               placeholder="Enter a short description"
               aria-describedby="description-error"
             />

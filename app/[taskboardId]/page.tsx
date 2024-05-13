@@ -1,18 +1,31 @@
 import { Heading } from "@/app/ui/components/heading";
-import { TaskCard } from "@/app/ui/components/task/taskCard";
 import { AddNewTaskCard } from "@/app/ui/components/task/addNewTaskCard";
 import { AddNewTaskSlidingPane } from "@/app/ui/components/task/addNewTaskSlidingPane";
 import { EditTaskSlidingPane } from "@/app/ui/components/task/editTaskSlidingPane";
 import { Suspense } from "react";
 import { fetchTaskboard } from "@/app/lib/taskBoardActions";
 import { TaskList } from "@/app/ui/components/task/taskList";
+import { fetchTask } from "@/app/lib/taskActions";
 
 export default async function Home({
   params,
+  searchParams,
 }: {
+  searchParams?: { taskId?: string };
   params: { taskboardId: string };
 }) {
-  const taskboard = await fetchTaskboard(Number(params.taskboardId));
+  // --- PROMISES ---
+
+  const taskboardPromise = fetchTaskboard(Number(params.taskboardId));
+
+  const activeTaskPromise = searchParams?.taskId
+    ? fetchTask(Number(searchParams?.taskId))
+    : undefined;
+
+  const [taskboard, activeTask] = await Promise.all([
+    taskboardPromise,
+    activeTaskPromise,
+  ]);
 
   // --- RENDER ---
 
@@ -32,7 +45,7 @@ export default async function Home({
       </Suspense>
 
       <Suspense fallback="Loading">
-        <EditTaskSlidingPane />
+        {activeTask && <EditTaskSlidingPane task={activeTask} />}
       </Suspense>
     </main>
   );
