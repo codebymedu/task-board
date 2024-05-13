@@ -8,6 +8,7 @@ import { useFormState } from "react-dom";
 import { Button } from "@/app/ui/components/button";
 import Image from "next/image";
 import { TaskFormState } from "@/app/lib/types";
+import toast from "react-hot-toast";
 
 export const AddNewTaskSlidingPane = () => {
   // --- STATE 1 ---
@@ -40,6 +41,8 @@ export const AddNewTaskSlidingPane = () => {
         Number(pathname.replace("/", ""))
       ).then((validationResults) => {
         if (!validationResults.errors) {
+          toast.success("Task added successfully!");
+
           handleClose();
         }
 

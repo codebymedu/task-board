@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { outfit } from "@/app/ui/fonts";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Task Board",
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={outfit.className}>{children}</body>
+      <body className={outfit.className}>
+        {children}
+
+        <Toaster position="bottom-left" />
+      </body>
     </html>
   );
 }

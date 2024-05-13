@@ -13,6 +13,7 @@ import { deleteTask, editTask } from "@/app/lib/taskActions";
 import { Button } from "@/app/ui/components/button";
 import Image from "next/image";
 import { Task, TaskFormState } from "@/app/lib/types";
+import toast from "react-hot-toast";
 
 type EditTaskSlidingPaneProps = {
   task: Task;
@@ -43,7 +44,10 @@ export const EditTaskSlidingPane = ({ task }: EditTaskSlidingPaneProps) => {
     );
   };
 
-  const handleDeleteTask = () => deleteTask(taskId).then(handleClose);
+  const handleDeleteTask = () =>
+    deleteTask(taskId)
+      .then(handleClose)
+      .then(() => toast.success("Task deleted successfully!"));
 
   // --- STATE 2 ---
 
@@ -51,6 +55,8 @@ export const EditTaskSlidingPane = ({ task }: EditTaskSlidingPaneProps) => {
     (prevState, taskFormData) =>
       editTask(prevState, taskFormData, taskId).then((validationResults) => {
         if (!validationResults.errors) {
+          toast.success("Task updated successfully!");
+
           handleClose();
         }
 
